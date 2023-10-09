@@ -8,15 +8,15 @@ export default class Comments extends Component {
     }
   
     componentDidMount() {
-      fetch('http://localhost:8080/api/v1/comments')
+      fetch(process.env.REACT_APP_API + '/api/v1/comments')
         // .then((response) => response.json())
         // Replace above with error handler
         .then((response) => {
           // Debugging: Print status code to console
-          // console.log("API Response Status Code: ", response.status)
+          // console.log("REACT_APP_API Response Status Code: ", response.status)
           if (response.status !== '200') {
             let err = Error
-            err.message = 'Invalid API Response Code: ' + response.status
+            err.message = 'Invalid REACT_APP_API Response Code: ' + response.status
             this.setState({ error: err })
           }
           return response.json()

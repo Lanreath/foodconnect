@@ -1,6 +1,6 @@
 import React from "react";
 import Form from "./Form";
-const FORM_ENDPOINT = 'http://localhost:8080/api/v1/users';
+const FORM_ENDPOINT = process.env.REACT_APP_API + '/api/v1/users';
 
 const UserForm = () => {
   const additionalData = {

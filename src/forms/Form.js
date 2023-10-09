@@ -19,9 +19,9 @@ function useForm({ additionalData }) {
       Object.assign(data, additionalData);
     };
 
-    if (data.id) {
+    // if (data.id) {
       
-    }
+    // }
 
     // if (data.commentID) {
     //   finalFormEndpoint = finalFormEndpoint + "/" +data.commentID;
@@ -42,7 +42,7 @@ function useForm({ additionalData }) {
       body: JSON.stringify(data),
     })
       .then((response) => {
-        if (response.status !== 200 || response.status !== 201) {
+        if (response.status !== 200 || response.status !== 201 || response.status !== 204) {
           throw new Error(response.statusText);
         }
 
