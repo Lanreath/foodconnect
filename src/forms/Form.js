@@ -9,7 +9,6 @@ function useForm({ additionalData }) {
     setStatus('loading');
     setMessage('');
 
-    console.log(e.target.getAttribute('action'));
     var finalFormEndpoint = e.target.getAttribute('action');
     const data = Array.from(e.target.elements)
       .filter((input) => input.name)
@@ -19,19 +18,9 @@ function useForm({ additionalData }) {
       Object.assign(data, additionalData);
     };
 
-    // if (data.id) {
-      
-    // }
-
-    // if (data.commentID) {
-    //   finalFormEndpoint = finalFormEndpoint + "/" +data.commentID;
-    // } else if (data.recipeID) {
-    //   finalFormEndpoint = finalFormEndpoint + "/" +data.recipeID;
-    // } else if (data.userID) {
-    //   finalFormEndpoint = finalFormEndpoint + "/" +data.userID;
-    // } else if (data.categoryID) {
-    //   finalFormEndpoint = finalFormEndpoint + "/" +data.categoryID;
-    // }
+    if (data.id) {
+      finalFormEndpoint = finalFormEndpoint + "/" + data.id;
+    }
 
     fetch(finalFormEndpoint, {
       method: e.target.getAttribute('method'),
@@ -39,10 +28,10 @@ function useForm({ additionalData }) {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, id: parseInt(data.id)})
     })
       .then((response) => {
-        if (response.status !== 200 || response.status !== 201 || response.status !== 204) {
+        if (response.status !== 200 && response.status !== 201 && response.status !== 204) {
           throw new Error(response.statusText);
         }
 

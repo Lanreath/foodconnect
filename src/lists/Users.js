@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Button from '../forms/Button'
-const FORM_ENDPOINT = process.env.API + '/api/v1/users/';
+const FORM_ENDPOINT = process.env.REACT_APP_API + '/api/v1/users/';
 
 const Users = () => {
   const { handleSubmit, status, message } = Button({});
@@ -13,11 +13,7 @@ const Users = () => {
 
   useEffect(() => {
     fetch(process.env.REACT_APP_API + '/api/v1/users')
-      // .then((response) => response.json())
-      // Replace above with error handler
       .then((response) => {
-        // Debugging: Print status code to console
-        // console.log("API Response Status Code: ", response.status)
         if (response.status !== '200') {
           let err = Error
           err.message = 'Invalid API Response Code: ' + response.status
@@ -30,17 +26,16 @@ const Users = () => {
           {
             users: json,
             isLoaded: true,
-          },
-          // If status code is not 200 export error instead
-          (error) => {
-            setState({
-              isLoaded: true,
-              error: error,
-            })
           }
         )
       })
-  }, [])
+      .catch((error) => {
+        setState({
+          isLoaded: true,
+          error: error,
+        })
+      })
+  }, [setState])
 
   if (state.error) {
     return <div>Error: {state.error.message}</div>
@@ -51,7 +46,7 @@ const Users = () => {
   } else {
     return (
       <>
-        <div className="text-lg font-bold underline decoration-dotted">Recipes</div>
+        <div className="text-lg font-bold underline decoration-dotted">Users</div>
         <ol className="list-decimal">
           {state.users?.map((m) => (
             <li key={m.id}>

@@ -17,8 +17,6 @@ const Recipes = () => {
       // .then((response) => response.json())
       // Replace above with error handler
       .then((response) => {
-        // Debugging: Print status code to console
-        // console.log("REACT_APP_API Response Status Code: ", response.status)
         if (response.status !== '200') {
           let err = Error
           err.message = 'Invalid API Response Code: ' + response.status
@@ -31,17 +29,16 @@ const Recipes = () => {
           {
             recipes: json,
             isLoaded: true,
-          },
-          // If status code is not 200 export error instead
-          (error) => {
+          }
+        )
+      })
+      .catch((error) => {
             setState({
               isLoaded: true,
               error: error,
             })
-          }
-        )
       })
-  }, [])
+  }, [setState])
 
   if (state.error) {
     return <div>Error: {state.error.message}</div>
